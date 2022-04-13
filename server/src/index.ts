@@ -29,6 +29,8 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 import { MyContext } from "./types";
 
+import cors from 'cors';
+
 require('dotenv').config();
 const main = async()=>{
 
@@ -53,6 +55,14 @@ const main = async()=>{
     const RedisStore = connectRedis(session);
     const redisClient = createClient({legacyMode:true});
     redisClient.connect().catch(console.error);
+
+    /* Enable Cors Globally for http://localhost:3000 */
+    app.use(
+        cors({
+            origin: "http://localhost:3000",
+            credentials:true,
+        })
+    );
 
     app.use(
         session({
@@ -120,7 +130,7 @@ const main = async()=>{
     });
 
     //Initialises Apollo and Graphql Middleware
-    apolloServer.applyMiddleware({app});
+    apolloServer.applyMiddleware({app, cors:false});
     
     
     /**************

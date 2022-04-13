@@ -106,3 +106,4 @@ dist
 #VSCODE
 .vscode
 .vscode/
+.code-workspace

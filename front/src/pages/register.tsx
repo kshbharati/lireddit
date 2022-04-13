@@ -26,19 +26,15 @@ interface registerProps{}
 
  const Register: React.FC<registerProps> = ({})=> {
 
-    const [,Register] = useMutation(REGISTER_MUTATION);
+    const [,register] = useMutation(REGISTER_MUTATION);
     return (
         <Wrapper variant="small">
             <Formik
                 initialValues={{ username: "", password: ""
                 }}
-                onSubmit={(values) => {
-                    const data= Register(values);
-                    data.then(result =>{
-                        console.log(result.data.register.errors);
-                        console.log(result.data.register.user);
-                        console.log(result);
-                    })
+                onSubmit={async (values) => {
+                    const response= register(values);
+                    
                 }}
             >
                 {({isSubmitting,setSubmitting}) => (
